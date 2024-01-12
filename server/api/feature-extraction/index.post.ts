@@ -19,12 +19,12 @@ export default defineEventHandler(async (event) => {
 	const embedding2Data = Array.from(embedding2.data);
 	console.log(embedding1Data, embedding2Data);
 
-	let dotSimilarity = null;
-	let cosSimilarity = null;
-	if (is1DArray(embedding1Data) && is1DArray(embedding2Data)) {
-		cosSimilarity = cosineSimilarity(embedding1Data, embedding2Data);
-		dotSimilarity = dotProduct(embedding1Data, embedding2Data);
+	if (!is1DArray(embedding1Data) || !is1DArray(embedding2Data)) {
+		throw new Error('Embeddings must be 1D arrays');
 	}
+
+	const cosSimilarity = cosineSimilarity(embedding1Data, embedding2Data);
+	const dotSimilarity = dotProduct(embedding1Data, embedding2Data);
 
 	return {
 		cosSimilarity,
