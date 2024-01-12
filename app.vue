@@ -1,15 +1,17 @@
 <template>
-  <div class="container max-w-5xl py-32 px-8">
-    <h1 class="text-3xl mb-8 text-center0">Ähnlichkeit berechnen</h1>
-    <UForm :state="state" class="flex flex-1 flex-col md:flex-row gap-8 mb-8"
-      @submit="async () => await calculateSimilarity()">
-      <UFormGroup label="Eingabe 1" class="flex-1">
-        <UTextarea v-model="state.input1" />
-      </UFormGroup>
+  <div class="container mx-auto max-w-5xl py-32 px-8">
+    <h1 class="text-3xl mb-8 text-center">Ähnlichkeit berechnen</h1>
+    <UForm :state="state" @submit="async () => await calculateSimilarity()">
+      <div class="flex flex-1 flex-col md:flex-row gap-8 mb-8">
 
-      <UFormGroup label="Eingabe 2" class="flex-1">
-        <UTextarea v-model="state.input2" />
-      </UFormGroup>
+        <UFormGroup label="Eingabe 1" class="flex-1">
+          <UTextarea v-model="state.input1" />
+        </UFormGroup>
+
+        <UFormGroup label="Eingabe 2" class="flex-1">
+          <UTextarea v-model="state.input2" />
+        </UFormGroup>
+      </div>
       <UButton :loading="isLoading" type="submit">Calculate similarity</UButton>
     </UForm>
 
