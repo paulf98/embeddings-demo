@@ -8,11 +8,15 @@
     <UButton :loading="isLoading" @click="async () => await calculateSimilarity()">Calculate similarity</UButton>
 
     <p class="mt-8 text-3xl">
-      Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }}</span>
+      Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }} %</span>
     </p>
     <p class="mt-8 text-3xl">
-      Dot-Product: <span class="font-bold">{{ dotSimilarity }}</span>
+      Kreuzprodukt: <span class="font-bold">{{ dotSimilarity }} %</span>
     </p>
+    <p class="mt-8 text-3xl">
+      Euklidische Distanz: <span class="font-bold">{{ euclidSimilarity }} %</span>
+    </p>
+
   </div>
 </template>
 
@@ -24,6 +28,7 @@ const isLoading = ref(false)
 
 const cosSimilarity = ref(0)
 const dotSimilarity = ref(0)
+const euclidSimilarity = ref(0)
 
 async function calculateSimilarity() {
   isLoading.value = true
@@ -40,6 +45,7 @@ async function calculateSimilarity() {
 
   cosSimilarity.value = data.value.cosSimilarity ?? 0
   dotSimilarity.value = data.value.dotSimilarity ?? 0
+  euclidSimilarity.value = data.value.euclidSimilarity ?? 0
 }
 
 </script>
