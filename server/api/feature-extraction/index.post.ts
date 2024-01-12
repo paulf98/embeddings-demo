@@ -19,13 +19,17 @@ export default defineEventHandler(async (event) => {
 	const embedding2Data = Array.from(embedding2.data);
 	console.log(embedding1Data, embedding2Data);
 
-	let similarity = null;
+	let dotSimilarity = null;
+	let cosSimilarity = null;
 	if (is1DArray(embedding1Data) && is1DArray(embedding2Data)) {
-		// similarity = cosineSimilarity(embedding1Data, embedding2Data);
-		similarity = dotProduct(embedding1Data, embedding2Data);
+		cosSimilarity = cosineSimilarity(embedding1Data, embedding2Data);
+		dotSimilarity = dotProduct(embedding1Data, embedding2Data);
 	}
 
-	return similarity;
+	return {
+		cosSimilarity,
+		dotSimilarity,
+	};
 });
 
 function is1DArray<T>(value: (T | T[] | T[][])[]): value is T[] {

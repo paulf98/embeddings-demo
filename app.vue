@@ -1,5 +1,6 @@
 <template>
   <div class="container max-w-5xl py-32 px-8">
+
     <div class="flex flex-col md:flex-row gap-8 mb-8">
       <UTextarea class="flex-1" v-model="input1" />
       <UTextarea class="flex-1" v-model="input2" />
@@ -7,7 +8,10 @@
     <UButton :loading="isLoading" @click="async () => await calculateSimilarity()">Calculate similarity</UButton>
 
     <p class="mt-8 text-3xl">
-      Output: <span class="font-bold">{{ similarity }}</span>
+      Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }}</span>
+    </p>
+    <p class="mt-8 text-3xl">
+      Dot-Product: <span class="font-bold">{{ dotSimilarity }}</span>
     </p>
   </div>
 </template>
@@ -18,7 +22,8 @@ const input2 = ref('The word is a sad place.')
 
 const isLoading = ref(false)
 
-const similarity = ref(0)
+const cosSimilarity = ref(0)
+const dotSimilarity = ref(0)
 
 async function calculateSimilarity() {
   isLoading.value = true
@@ -31,8 +36,10 @@ async function calculateSimilarity() {
   })
   isLoading.value = pending.value
 
+  if (!data || !data.value) return
 
-  similarity.value = data?.value ?? 0
+  cosSimilarity.value = data.value.cosSimilarity ?? 0
+  dotSimilarity.value = data.value.dotSimilarity ?? 0
 }
 
 </script>
