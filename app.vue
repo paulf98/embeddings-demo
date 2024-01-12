@@ -1,11 +1,17 @@
 <template>
   <div class="container max-w-5xl py-32 px-8">
+    <h1 class="text-3xl mb-8 text-center0">Ähnlichkeit berechnen</h1>
+    <UForm :state="state" class="flex flex-1 flex-col md:flex-row gap-8 mb-8"
+      @submit="async () => await calculateSimilarity()">
+      <UFormGroup label="Eingabe 1" class="flex-1">
+        <UTextarea v-model="state.input1" />
+      </UFormGroup>
 
-    <div class="flex flex-col md:flex-row gap-8 mb-8">
-      <UTextarea class="flex-1" v-model="input1" />
-      <UTextarea class="flex-1" v-model="input2" />
-    </div>
-    <UButton :loading="isLoading" @click="async () => await calculateSimilarity()">Calculate similarity</UButton>
+      <UFormGroup label="Eingabe 2" class="flex-1">
+        <UTextarea v-model="state.input2" />
+      </UFormGroup>
+      <UButton :loading="isLoading" type="submit">Calculate similarity</UButton>
+    </UForm>
 
     <p class="mt-8 text-3xl">
       Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }} %</span>
@@ -21,8 +27,11 @@
 </template>
 
 <script setup lang="ts">
-const input1 = ref('The world is a beautiful place to be.')
-const input2 = ref('The word is a sad place.')
+
+const state = reactive({
+  input1: 'I like bananas',
+  input2: 'I like fruits',
+})
 
 const isLoading = ref(false)
 
@@ -31,12 +40,13 @@ const dotSimilarity = ref(0)
 const euclidSimilarity = ref(0)
 
 async function calculateSimilarity() {
+  console.log(state.input1, state.input2)
   isLoading.value = true
   const { data, pending } = await useFetch('/api/feature-extraction', {
     method: 'POST',
     body: JSON.stringify({
-      text1: input1.value,
-      text2: input2.value,
+      text1: state.input1,
+      text2: state.input2,
     }),
   })
   isLoading.value = pending.value

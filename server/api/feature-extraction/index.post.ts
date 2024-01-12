@@ -4,7 +4,9 @@ const TASK_NAME = 'feature-extraction';
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
-
+	if (!body.text1 || !body.text2) {
+		throw new Error('Missing text1 or text2');
+	}
 	let generateEmbeddings = await pipeline(TASK_NAME);
 
 	const embedding1 = await generateEmbeddings(body.text1, {
