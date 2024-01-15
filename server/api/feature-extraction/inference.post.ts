@@ -9,7 +9,8 @@ import {
 	euclideanDistance,
 } from '../../../utils/math';
 
-const MODEL = 'llmrails/ember-v1';
+// const MODEL = 'llmrails/ember-v1';
+const MODEL = 'Cohere/Cohere-embed-english-v3.0';
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);

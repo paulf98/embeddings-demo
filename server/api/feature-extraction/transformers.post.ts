@@ -10,14 +10,15 @@ import {
 } from '../../../utils/math';
 
 const TASK_NAME = 'feature-extraction';
-const MODEL = 'Xenova/all-MiniLM-L6-v2'; // this is the default model
+// const MODEL = 'Xenova/all-MiniLM-L6-v2'; // this is the default model
+const MODEL = 'Cohere/Cohere-embed-english-v3.0'; // this is the default model
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
 	if (!body.text1 || !body.text2) {
 		throw new Error('Missing text1 or text2');
 	}
-	let generateEmbeddings = await pipeline(TASK_NAME);
+	let generateEmbeddings = await pipeline(TASK_NAME, MODEL);
 
 	const embedding1 = await generateEmbeddings(body.text1, {
 		pooling: 'mean',
