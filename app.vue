@@ -32,9 +32,18 @@
     <hr>
     <div class="py-8">
       <h1 class="text-3xl mb-4">Saved Results</h1>
-      <div class="flex flex-col gap-8">
-        <div v-for="result in results">
-          <p>{{ result.method }}</p>
+      <div class="flex gap-2 mb-4">
+        <span class="bg-cyan-100 px-4 py-1 rounded-full">
+          transformers
+        </span>
+        <span class="bg-green-100 px-4 py-1 rounded-full">
+          inference
+        </span>
+      </div>
+      <div class="flex flex-col gap-4">
+
+        <div v-for="result in results" class="border rounded-md shadow-sm p-4 relative"
+          :class="result.method == 'inference' ? 'bg-green-100' : 'bg-cyan-100'">
           <p>{{ result.input1 }}</p>
           <p>{{ result.input2 }}</p>
           <p>
