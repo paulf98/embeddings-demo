@@ -57,6 +57,10 @@
           <p>
             Euklidische Distanz: <span class="font-bold">{{ result.euclidSimilarity }} %</span>
           </p>
+          <button class="bg-red-500 text-white px-3 py-2 rounded-full absolute top-4 right-4"
+            @click="() => deleteFromLocalStorage(result.id)">
+            <UIcon name="i-heroicons-trash" />
+          </button>
         </div>
       </div>
     </div>
@@ -111,6 +115,7 @@ async function calculateSimilarity() {
 const localStorage = process.client ? window.localStorage : null
 
 type Result = {
+  id: number
   input1: string
   input2: string
   method: string
@@ -126,6 +131,7 @@ type Result = {
  */
 function saveResultLocally() {
   const result = {
+    id: Date.now(),
     input1: state.input1,
     input2: state.input2,
     method: state.method,
@@ -150,5 +156,15 @@ function saveResultLocally() {
 
 const results = ref<Result[] | []>(JSON.parse(localStorage?.getItem('results') ?? '[]'))
 
+function deleteFromLocalStorage(id: number) {
+  if (!localStorage) return
+  const localResults = localStorage.getItem('results')
+  if (!localResults) return
+
+  const parsedResults = JSON.parse(localResults)
+  const filteredResults = parsedResults.filter((result: Result) => result.id !== id)
+  localStorage.setItem('results', JSON.stringify(filteredResults))
+  results.value = JSON.parse(localStorage.getItem('results') ?? '[]')
+}
 
 </script>

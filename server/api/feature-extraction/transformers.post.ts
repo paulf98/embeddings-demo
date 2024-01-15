@@ -10,8 +10,8 @@ import {
 } from '../../../utils/math';
 
 const TASK_NAME = 'feature-extraction';
-// const MODEL = 'Xenova/all-MiniLM-L6-v2'; // this is the default model
-const MODEL = 'Cohere/Cohere-embed-english-v3.0'; // this is the default model
+const MODEL = 'Xenova/all-MiniLM-L6-v2'; // this is the default model
+// const MODEL = 'Cohere/Cohere-embed-english-v3.0'; // this is the default model
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
