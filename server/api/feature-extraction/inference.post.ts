@@ -54,5 +54,6 @@ export default defineEventHandler(async (event) => {
 		cosSimilarity,
 		dotSimilarity,
 		euclidSimilarity,
+		model: MODEL,
 	};
 });

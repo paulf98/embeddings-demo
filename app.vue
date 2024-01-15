@@ -33,17 +33,19 @@
     <div class="py-8">
       <h1 class="text-3xl mb-4">Saved Results</h1>
       <div class="flex gap-2 mb-4">
-        <span class="bg-cyan-100 px-4 py-1 rounded-full">
+        <span class="bg-amber-200 px-4 py-1 rounded-full">
           transformers
         </span>
-        <span class="bg-green-100 px-4 py-1 rounded-full">
+        <span class="bg-green-200 px-4 py-1 rounded-full">
           inference
         </span>
       </div>
       <div class="flex flex-col gap-4">
-
         <div v-for="result in results" class="border rounded-md shadow-sm p-4 relative"
-          :class="result.method == 'inference' ? 'bg-green-100' : 'bg-cyan-100'">
+          :class="result.method == 'inference' ? 'bg-green-200' : 'bg-amber-200'">
+          <div class="bg-white px-4 py-1 rounded-full absolute bottom-4 right-4">
+            {{ result.model }}
+          </div>
           <p>{{ result.input1 }}</p>
           <p>{{ result.input2 }}</p>
           <p>
@@ -74,7 +76,7 @@ const methodOptions = [{
 const state = reactive({
   input1: 'I like bananas',
   input2: 'I like fruits',
-  method: 'transformers'
+  method: 'transformers',
 })
 
 const isLoading = ref(false)
@@ -82,6 +84,7 @@ const isLoading = ref(false)
 const cosSimilarity = ref(0)
 const dotSimilarity = ref(0)
 const euclidSimilarity = ref(0)
+const model = ref('')
 
 async function calculateSimilarity() {
   isLoading.value = true
@@ -99,6 +102,8 @@ async function calculateSimilarity() {
   cosSimilarity.value = (data.value as any).cosSimilarity ?? 0
   dotSimilarity.value = (data.value as any).dotSimilarity ?? 0
   euclidSimilarity.value = (data.value as any).euclidSimilarity ?? 0
+  model.value = (data.value as any).model ?? ''
+
 
   saveResultLocally()
 }
@@ -112,6 +117,7 @@ type Result = {
   cosSimilarity: number
   dotSimilarity: number
   euclidSimilarity: number
+  model: string
 }
 
 /**
@@ -126,6 +132,7 @@ function saveResultLocally() {
     cosSimilarity: cosSimilarity.value,
     dotSimilarity: dotSimilarity.value,
     euclidSimilarity: euclidSimilarity.value,
+    model: model.value,
   }
 
   if (!localStorage) return

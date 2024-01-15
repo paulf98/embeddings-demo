@@ -10,6 +10,7 @@ import {
 } from '../../../utils/math';
 
 const TASK_NAME = 'feature-extraction';
+const MODEL = 'Xenova/all-MiniLM-L6-v2'; // this is the default model
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
@@ -52,5 +53,6 @@ export default defineEventHandler(async (event) => {
 		cosSimilarity,
 		dotSimilarity,
 		euclidSimilarity,
+		model: MODEL,
 	};
 });
