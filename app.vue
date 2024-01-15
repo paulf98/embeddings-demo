@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto max-w-5xl py-32 px-8">
+  <div class="container mx-auto max-w-5xl py-16 px-8">
     <h1 class="text-3xl mb-8 text-center">Ähnlichkeit berechnen</h1>
     <UForm :state="state" @submit="async () => await calculateSimilarity()">
       <div class="flex flex-1 flex-col md:flex-row gap-8 mb-8">
@@ -18,21 +18,36 @@
       <UButton :loading="isLoading" type="submit">Berechnen</UButton>
     </UForm>
 
-    <p class="mt-8 text-3xl">
-      Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }} %</span>
-    </p>
-    <p class="mt-8 text-3xl">
-      Kreuzprodukt: <span class="font-bold">{{ dotSimilarity }} %</span>
-    </p>
-    <p class="mt-8 text-3xl">
-      Euklidische Distanz: <span class="font-bold">{{ euclidSimilarity }} %</span>
-    </p>
-
     <div class="py-8">
-      <h1>Results</h1>
-
-      results: {{ results }}
-
+      <p class="mt-8 text-3xl">
+        Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }} %</span>
+      </p>
+      <p class="mt-8 text-3xl">
+        Kreuzprodukt: <span class="font-bold">{{ dotSimilarity }} %</span>
+      </p>
+      <p class="mt-8 text-3xl">
+        Euklidische Distanz: <span class="font-bold">{{ euclidSimilarity }} %</span>
+      </p>
+    </div>
+    <hr>
+    <div class="py-8">
+      <h1 class="text-3xl mb-4">Saved Results</h1>
+      <div class="flex flex-col gap-8">
+        <div v-for="result in results">
+          <p>{{ result.method }}</p>
+          <p>{{ result.input1 }}</p>
+          <p>{{ result.input2 }}</p>
+          <p>
+            Kosinusähnlichkeit: <span class="font-bold">{{ result.cosSimilarity }} %</span>
+          </p>
+          <p>
+            Kreuzprodukt: <span class="font-bold">{{ result.dotSimilarity }} %</span>
+          </p>
+          <p>
+            Euklidische Distanz: <span class="font-bold">{{ result.euclidSimilarity }} %</span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +96,15 @@ async function calculateSimilarity() {
 
 const localStorage = process.client ? window.localStorage : null
 
+type Result = {
+  input1: string
+  input2: string
+  method: string
+  cosSimilarity: number
+  dotSimilarity: number
+  euclidSimilarity: number
+}
+
 /**
  * Save the Result of the Calculation to the Local Storage
  * 
@@ -108,7 +132,7 @@ function saveResultLocally() {
   results.value = JSON.parse(localStorage.getItem('results') ?? '[]')
 }
 
-const results = ref(localStorage?.getItem('results') || [])
+const results = ref<Result[] | []>(JSON.parse(localStorage?.getItem('results') ?? '[]'))
 
 
 </script>
