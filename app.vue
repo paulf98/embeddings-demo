@@ -18,14 +18,14 @@
       <UButton :loading="isLoading" type="submit">Berechnen</UButton>
     </UForm>
 
-    <div class="py-8">
-      <p class="mt-8 text-3xl">
+    <div class="flex flex-col gap-4 py-8">
+      <p class="text-xl">
         Kosinusähnlichkeit: <span class="font-bold">{{ cosSimilarity }} %</span>
       </p>
-      <p class="mt-8 text-3xl">
+      <p class="text-xl">
         Kreuzprodukt: <span class="font-bold">{{ dotSimilarity }} %</span>
       </p>
-      <p class="mt-8 text-3xl">
+      <p class="text-xl">
         Euklidische Distanz: <span class="font-bold">{{ euclidSimilarity }} %</span>
       </p>
     </div>
