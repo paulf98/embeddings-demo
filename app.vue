@@ -12,7 +12,10 @@
           <UTextarea v-model="state.input2" />
         </UFormGroup>
       </div>
-      <UButton :loading="isLoading" type="submit">Calculate similarity</UButton>
+
+      <URadioGroup v-model="state.method" legend="Methode auswählen" :options="methodOptions" class="my-4" />
+
+      <UButton :loading="isLoading" type="submit">Berechnen</UButton>
     </UForm>
 
     <p class="mt-8 text-3xl">
@@ -30,9 +33,18 @@
 
 <script setup lang="ts">
 
+const methodOptions = [{
+  value: 'transformers',
+  label: 'Transformers'
+}, {
+  value: 'inference',
+  label: 'Inference'
+}]
+
 const state = reactive({
   input1: 'I like bananas',
   input2: 'I like fruits',
+  method: 'transformers'
 })
 
 const isLoading = ref(false)
@@ -44,7 +56,7 @@ const euclidSimilarity = ref(0)
 async function calculateSimilarity() {
   console.log(state.input1, state.input2)
   isLoading.value = true
-  const { data, pending } = await useFetch('/api/feature-extraction', {
+  const { data, pending } = await useFetch(`/api/feature-extraction/${state.method}`, {
     method: 'POST',
     body: JSON.stringify({
       text1: state.input1,

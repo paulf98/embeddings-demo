@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@huggingface/inference':
+    specifier: ^2.6.4
+    version: 2.6.4
   '@nuxt/ui':
     specifier: ^2.12.0
     version: 2.12.0(nuxt@3.9.1)(vite@5.0.11)(vue@3.4.10)
@@ -606,6 +609,11 @@ packages:
     dependencies:
       '@tanstack/vue-virtual': 3.0.1(vue@3.4.10)
       vue: 3.4.10
+    dev: false
+
+  /@huggingface/inference@2.6.4:
+    resolution: {integrity: sha512-Xna7arltBSBoKaH3diGi3sYvkExgJMd/pF4T6vl2YbmDccbr1G/X5EPZ2048p+YgrJYG1jTYFCtY6Dr3HvJaow==}
+    engines: {node: '>=18'}
     dev: false
 
   /@huggingface/jinja@0.1.2:
