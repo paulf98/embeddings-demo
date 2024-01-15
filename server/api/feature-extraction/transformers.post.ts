@@ -1,4 +1,13 @@
 import { pipeline } from '@xenova/transformers';
+import {
+	is1DArray,
+	cosineSimilarity,
+	cosineSimilarityToPercentage,
+	dotProductToPercentage,
+	calculateMaxDistance,
+	distanceToSimilarityPercentage,
+	euclideanDistance,
+} from '../../../utils/math';
 
 const TASK_NAME = 'feature-extraction';
 

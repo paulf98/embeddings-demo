@@ -28,6 +28,12 @@
       Euklidische Distanz: <span class="font-bold">{{ euclidSimilarity }} %</span>
     </p>
 
+    <div class="py-8">
+      <h1>Results</h1>
+
+      results: {{ results }}
+
+    </div>
   </div>
 </template>
 
@@ -54,7 +60,6 @@ const dotSimilarity = ref(0)
 const euclidSimilarity = ref(0)
 
 async function calculateSimilarity() {
-  console.log(state.input1, state.input2)
   isLoading.value = true
   const { data, pending } = await useFetch(`/api/feature-extraction/${state.method}`, {
     method: 'POST',
@@ -67,9 +72,43 @@ async function calculateSimilarity() {
 
   if (!data || !data.value) return
 
-  cosSimilarity.value = data.value.cosSimilarity ?? 0
-  dotSimilarity.value = data.value.dotSimilarity ?? 0
-  euclidSimilarity.value = data.value.euclidSimilarity ?? 0
+  cosSimilarity.value = (data.value as any).cosSimilarity ?? 0
+  dotSimilarity.value = (data.value as any).dotSimilarity ?? 0
+  euclidSimilarity.value = (data.value as any).euclidSimilarity ?? 0
+
+  saveResultLocally()
 }
+
+const localStorage = process.client ? window.localStorage : null
+
+/**
+ * Save the Result of the Calculation to the Local Storage
+ * 
+ */
+function saveResultLocally() {
+  const result = {
+    input1: state.input1,
+    input2: state.input2,
+    method: state.method,
+    cosSimilarity: cosSimilarity.value,
+    dotSimilarity: dotSimilarity.value,
+    euclidSimilarity: euclidSimilarity.value,
+  }
+
+  if (!localStorage) return
+  // check if there is a results array in the local storage
+  let localResults = localStorage.getItem('results')
+  if (!localResults) {
+    localStorage.setItem('results', "[]")
+    localResults = localStorage.getItem('results') ?? '[]'
+  }
+
+  // add the new result to the array
+  localStorage.setItem('results', JSON.stringify([...JSON.parse(localResults), result]))
+  results.value = JSON.parse(localStorage.getItem('results') ?? '[]')
+}
+
+const results = ref(localStorage?.getItem('results') || [])
+
 
 </script>

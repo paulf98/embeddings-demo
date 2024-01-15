@@ -1,4 +1,13 @@
 import { HfInference } from '@huggingface/inference';
+import {
+	is1DArray,
+	cosineSimilarity,
+	cosineSimilarityToPercentage,
+	dotProductToPercentage,
+	calculateMaxDistance,
+	distanceToSimilarityPercentage,
+	euclideanDistance,
+} from '../../../utils/math';
 
 const MODEL = 'llmrails/ember-v1';
 

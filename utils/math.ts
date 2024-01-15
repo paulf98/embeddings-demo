@@ -1,6 +1,6 @@
-const is1DArray = <T>(value: (T | T[] | T[][])[]): value is T[] => {
+export function is1DArray<T>(value: (T | T[] | T[][])[]): value is T[] {
 	return !Array.isArray(value[0]);
-};
+}
 
 function dotProduct(vectorA: number[], vectorB: number[]): number {
 	if (vectorA.length !== vectorB.length) {
@@ -23,14 +23,17 @@ function normalizeVector(vector: number[]): number[] {
 	return vector.map((val) => val / magnitude);
 }
 
-function dotProductToPercentage(vectorA: number[], vectorB: number[]): number {
+export function dotProductToPercentage(
+	vectorA: number[],
+	vectorB: number[]
+): number {
 	const normalizedA = normalizeVector(vectorA);
 	const normalizedB = normalizeVector(vectorB);
 	const cosineSimilarity = dotProduct(normalizedA, normalizedB);
 	return ((cosineSimilarity + 1) / 2) * 100; // Adjusted for range [-1, 1]
 }
 
-function cosineSimilarity(vec1: number[], vec2: number[]): number {
+export function cosineSimilarity(vec1: number[], vec2: number[]): number {
 	if (vec1.length !== vec2.length) {
 		throw new Error(
 			'Beide Vektoren müssen dieselbe Anzahl an Dimensionen haben.'
@@ -47,7 +50,7 @@ function cosineSimilarity(vec1: number[], vec2: number[]): number {
 	return dotProd / magnitudeProd;
 }
 
-function cosineSimilarityToPercentage(
+export function cosineSimilarityToPercentage(
 	cosineSimilarity: number,
 	considerNegativeValues: boolean = false
 ): number {
@@ -60,7 +63,7 @@ function cosineSimilarityToPercentage(
 	}
 }
 
-function euclideanDistance(point1: number[], point2: number[]): number {
+export function euclideanDistance(point1: number[], point2: number[]): number {
 	if (point1.length !== point2.length) {
 		throw new Error(
 			'Beide Punkte müssen dieselbe Anzahl an Dimensionen haben.'
@@ -81,7 +84,7 @@ function normalizeDistance(distance: number, maxDistance: number): number {
 }
 
 // Function to convert normalized distance to similarity percentage
-function distanceToSimilarityPercentage(
+export function distanceToSimilarityPercentage(
 	distance: number,
 	maxDistance: number
 ): number {
@@ -89,6 +92,6 @@ function distanceToSimilarityPercentage(
 	return (1 - normalizedDistance) * 100;
 }
 
-function calculateMaxDistance(numDimensions: number): number {
+export function calculateMaxDistance(numDimensions: number): number {
 	return Math.sqrt(numDimensions);
 }
